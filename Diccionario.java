@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -26,9 +27,17 @@ public class Diccionario {
      * Inicializa la lista de palabras.
      */
     public Diccionario(String nombreArchivo) {
-        this.palabras = new LinkedList<>();
-        cargarDiccionario(nombreArchivo);
+    this.palabras = new LinkedList<>();
+    File file = new File(nombreArchivo);
+    if (!file.exists()) {
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    cargarDiccionario(nombreArchivo);
+}
 
     /**
      * Agrega una palabra al diccionario.
@@ -51,8 +60,8 @@ public class Diccionario {
      * Guarda el diccionario en un archivo.
      * @param nombreArchivo El nombre del archivo donde se guardará el diccionario.
      */
-    public void guardarDiccionario(String nombreArchivo) throws IOException { 
-        try (PrintWriter writer = new PrintWriter(nombreArchivo)) {
+    public void guardarDiccionario(String path) throws IOException { 
+        try (PrintWriter writer = new PrintWriter(path)) {
             for (String palabra : palabras) {
                 writer.println(palabra);
             }
