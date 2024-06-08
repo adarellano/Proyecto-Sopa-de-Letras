@@ -24,20 +24,20 @@ import java.util.List;
  */
 public class SPDGUI extends JFrame {
 
-    private Diccionario diccionario;
+    private Diccionario diccionario = new Diccionario("diccionario.txt");
     private JLabel archivoLabel;
     private JTextField archivoTextField;
-    private JButton cargarArchivoButton;
+    private JButton cargarArchivoButton = new JButton("Cargar Archivo");
     private JLabel tableroLabel;
     private JTextArea tableroYDiccionarioArea;
     private JLabel palabraLabel;
     private JTextField palabraTextField;
     private JLabel metodoBusquedaLabel;
-    private JComboBox<String> metodoBusquedaComboBox;
-    private JButton buscarPalabraButton;
+    private JComboBox<String> metodoBusquedaComboBox = new JComboBox<>(new String[]{"DFS", "BFS"});
+    private JButton buscarPalabraButton = new JButton("Buscar Palabra");
     private JLabel resultadosBusquedaLabel;
     private JTextArea resultadosBusquedaArea;
-    private JButton guardarDiccionarioButton;
+    private JButton guardarDiccionarioButton = new JButton("Guardar Diccionario");
 
     /**
      * Constructor para la clase SopaDeLetrasGUI.
@@ -163,33 +163,34 @@ public class SPDGUI extends JFrame {
         setVisible(true);
     }
 
-        private void cargarArchivo() {
-            JFileChooser fileChooser = new JFileChooser();
-            int returnValue = fileChooser.showOpenDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader(selectedFile));
-                    String line;
-                    StringBuilder stringBuilder = new StringBuilder();
-                    while ((line = reader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
+    private void cargarArchivo() {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            if (!selectedFile.exists()) {
+                JOptionPane.showMessageDialog(null, "File does not exist: " + selectedFile.getAbsolutePath());
+                return;
+            }
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(selectedFile));
+                String line;
+                StringBuilder stringBuilder = new StringBuilder();
+                while ((line = reader.readLine()) != null) {
+                    String[] words = line.split(" ");
+                    for (String word : words) {
+                        stringBuilder.append(word).append("\n");
                     }
-                    reader.close();
-        
-                    String[] lines = stringBuilder.toString().split("\n");
-                    String tablero = lines[0];
-                    String diccionarioTexto = lines[1];
-        
-                    diccionario.cargarDiccionario(diccionarioTexto);
-                    tableroYDiccionarioArea.setText("Tablero: \n" + tablero + "\nDiccionario: \n" + diccionarioTexto);
-        
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
                 }
+                reader.close();
+    
+                tableroYDiccionarioArea.setText(stringBuilder.toString());
+    
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         }
-
+    }
         /**
          * Busca una palabra en el tablero y muestra los resultados en el área de texto.
          */
@@ -209,10 +210,15 @@ public class SPDGUI extends JFrame {
             }
     
             // Mostrar los resultados en el área de texto
-            String resultado = "Palabras encontradas: \n";
-            for (String palabraEncontrada : palabrasEncontradas) {
-                resultado += palabraEncontrada + "\n";
-            }
+            String resultado;
+            if (palabrasEncontradas.isEmpty()) {
+        resultado = "La palabra no se encontró en el tablero.\n";
+    } else {
+        resultado = "Palabras encontradas: \n";
+        for (String palabraEncontrada : palabrasEncontradas) {
+            resultado += palabraEncontrada + "\n";
+        }
+    }
     
             // Mostrar el tiempo de ejecución
             resultado += "\nTiempo de ejecución: " + tiempoEjecucion + " milisegundos";
@@ -251,6 +257,6 @@ public class SPDGUI extends JFrame {
              * @param args Los argumentos de la línea de comandos.
              */
             public static void main(String[] args) {
-                SwingUtilities.invokeLater(SopaDeLetrasGUI::new);
+                SwingUtilities.invokeLater(SPDGUI::new);
             }
             } 
