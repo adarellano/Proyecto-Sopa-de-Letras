@@ -1,3 +1,8 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ */
+
 /**
  * @Author: Annabella Mendoza
  */
@@ -46,7 +51,7 @@ public class Diccionario {
      * Guarda el diccionario en un archivo.
      * @param nombreArchivo El nombre del archivo donde se guardará el diccionario.
      */
-    public void guardarDiccionario(String nombreArchivo) {
+    public void guardarDiccionario(String nombreArchivo) throws IOException { 
         try (PrintWriter writer = new PrintWriter(nombreArchivo)) {
             for (String palabra : palabras) {
                 writer.println(palabra);
@@ -60,7 +65,7 @@ public class Diccionario {
      * Carga el diccionario desde un archivo.
      * @param nombreArchivo El nombre del archivo donde se encuentra el diccionario.
      */
-    private void cargarDiccionario(String nombreArchivo) {
+    public void cargarDiccionario(String nombreArchivo) {
         try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {
             String linea;
             while ((linea = reader.readLine()) != null) {
@@ -70,4 +75,39 @@ public class Diccionario {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Busca una palabra en el diccionario utilizando un algoritmo de búsqueda en anchura (BFS).
+     * @param palabra La palabra a buscar.
+     * @return El tiempo en nanosegundos que tardó en encontrar la palabra.
+     */
+    public long buscarPalabraDFS(String tablero, String palabra, List<String> palabrasEncontradas) {
+        long startTime = System.nanoTime();
+        for (String p : palabras) {
+            if (p.equals(palabra)) {
+                palabrasEncontradas.add(p);
+                return System.nanoTime() - startTime;
+            }
+        }
+        // tiempo de ejecución
+        return System.nanoTime() - startTime;
+    }
+
+    /**
+     * Busca una palabra en el diccionario utilizando un algoritmo de búsqueda en profundidad (DFS).
+     * @param palabra La palabra a buscar.
+     * @return El tiempo en nanosegundos que tardó en encontrar la palabra.
+     */
+    public long buscarPalabraBFS(String tablero, String palabra, List<String> palabrasEncontradas) {
+        long startTime = System.nanoTime();
+        for (String p : palabras) {
+            if (p.equals(palabra)) {
+                palabrasEncontradas.add(p);
+                return System.nanoTime() - startTime;
+            }
+        }
+        // tiempo de ejecución
+        return System.nanoTime() - startTime;
+    }
 }
+
