@@ -4,53 +4,28 @@
  */
 package dfs;
 
-import javax.swing.JOptionPane;
 
 /**
  *
- * @author Ada
+ * @author Ada Arellano
  */
 public class DFS {
     
-    public static Posicion BuscarPrimeraLetra_OLD(ListaDoble ListaBuscar, NodoDoble LetraActual)
-    {
-        int intPosFila=0, intPosCol=0;
-        boolean bContinuar=true;
-        
-        //recorro la fila 0, que es la lista principal.
-        while(bContinuar)
-        {
-            if(intPosFila==0)
-            {
-                if(ListaBuscar.BuscarIndice(intPosCol).getData() == LetraActual.getData())
-                    break;
-            }
-            else
-            {
-                if(ListaBuscar.BuscarIndice(intPosCol).getListaAdy().BuscarIndice(intPosFila-1).getData() == LetraActual.getData())
-                    break;
-            }
-            if(intPosCol<3)
-                intPosCol++;
-            else
-            {
-                intPosCol=0;
-                intPosFila++;
-                if (intPosFila>3)
-                {
-                    bContinuar = false; //while
-                }
-            }
-        }
-        if(!bContinuar)
-        {
-            intPosCol=-1;
-            intPosFila=-1;
-        }    
-        
-        Posicion PosicionLetra = new Posicion(intPosFila, intPosCol);
-        return PosicionLetra;
-    }
+    /**
+    * Busca la primera letra (LetraActual) dentro de la estructura de 
+    * lista enlazada dada por (ListaBuscar).
+    *
+    * @param ListaBuscar La lista enlazada que representa la estructura 
+    * del gráfico en la que se busca. Se asume que esta lista es la principal 
+    * (de nivel superior) que contiene otras listas enlazadas como listas de adyacencia.
+    * 
+    * @param LetraActual El carácter (NodoDoble) que se busca.
+    * @return El primer NodoDoble encontrado en el gráfico que coincide 
+    * con el carácter especificado, o null si no se encuentra ninguna coincidencia.
+    *
+    * @throws NullPointerException si ListaBuscar o LetraActual es nulo.
+    *
+    */
     
     public static NodoDoble BuscarPrimeraLetra(ListaDoble ListaBuscar, NodoDoble LetraActual)
     {
@@ -100,10 +75,20 @@ public class DFS {
         return NodoRetorno;
     }
     
+    /**
+    * Busca los nodos adyacentes al nodo dado (NodoActual) dentro de la lista 
+    * doble que representa un grafo (Lista).
+    * @param Lista La lista doble que representa el grafo.
+    * @param NodoActual El nodo del cual se quieren encontrar los nodos adyacentes.
+    * @return La función devuelve una nueva lista doble (ListaAdy) que contiene los nodos adyacentes al nodo actual.
+    */
+    
     public static ListaDoble BuscarNodosAdyacentes(ListaDoble Lista, NodoDoble NodoActual)
     {
-        int fila = (int)(NodoActual.getPosition().charAt(0));
-        int col = (int)(NodoActual.getPosition().charAt(1));
+        int fila;
+        int col;
+        fila = (int)(NodoActual.getPosition().charAt(0))-48;
+        col = (int)(NodoActual.getPosition().charAt(1))-48;
         
         ListaDoble ListaAdy = new ListaDoble();
         if (fila==0) 
@@ -111,104 +96,69 @@ public class DFS {
             if (col==0 || col==3)
             {
                 if (col==0)
-                {
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getData()); //s
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().getpFirst().getData()); //m
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().getpFirst().getData()); //e
-                    ListaAdy.Imprimir();
+                { //a
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpNext()); //s
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpNext().getListaAdy().getpFirst()); //m
+                    ListaAdy.AgregarNodoFinal(NodoActual.getListaAdy().getpFirst()); //e
+                    //ListaAdy.Imprimir();
                 }
                 else
-                {
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().getpFirst().getData()); //i
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getListaAdy().getpFirst().getData()); //p
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getData()); //o
-                    ListaAdy.Imprimir();
+                { //l
+                    ListaAdy.AgregarNodoFinal(NodoActual.getListaAdy().getpFirst()); //i
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpPrev().getListaAdy().getpFirst()); //p
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpPrev()); //o
+                    //ListaAdy.Imprimir();
                 }
             }
             else //col = 1 || col = 2
             {
                 if (col==1){ //s
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.Imprimir();
+                    
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpNext()); //o
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila)); //p
+                    ListaAdy.AgregarNodoFinal(NodoActual.getListaAdy().BuscarIndice(fila)); //m
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpPrev().getListaAdy().BuscarIndice(fila)); //e
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpPrev()); //a
+                    //ListaAdy.Imprimir();
                 }
                 else
                 { //o
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData());//l
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());//i
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());//p
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());//m
-                    ListaAdy.Imprimir();
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpNext());//l
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila));//i
+                    ListaAdy.AgregarNodoFinal(NodoActual.getListaAdy().BuscarIndice(fila));//p
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpPrev().getListaAdy().BuscarIndice(fila));//m
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpPrev());//s
+                    //ListaAdy.Imprimir();
                     
                 }
             }
         }
-        if (fila==3)
-        {
-            if (col==0 || col==3)
-            {
-                if (col==0){ //u
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila-1).getData());    
-                    ListaAdy.Imprimir();
-                }
-                else{//r
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-            }
-            else { //col 1 || col=2
-                if (col==1){//n
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());            
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData()); 
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-                else{//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());            
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData()); 
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }            
-            }   
-        }
-
+        
         if(fila==1)
         {
             if(col==1 ||col==2)
             {
                 if(col==1){//m
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col));//s
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1));
+                     ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1));//a
+                    //ListaAdy.Imprimir();
                 }
                 else{
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col));//s
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1));//a
+                    //ListaAdy.Imprimir();
                     
                 }
             }
@@ -216,21 +166,21 @@ public class DFS {
             { //col=0 || col=3
                 if(col==0)
                 {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData()); //a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData()); //s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData()); //m
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData()); //e
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getData()); //s
-                    ListaAdy.Imprimir();
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col)); //a
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1)); //s
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1)); //m
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila)); //e
+                    ListaAdy.AgregarNodoFinal(NodoActual.getpNext()); //s
+                    //ListaAdy.Imprimir();
                 }
                 else
-                {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());        
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.Imprimir();
+                { //i
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col)); //l
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila)); //n
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila)); //o       
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1)); //p
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1)); //o           
+                    //ListaAdy.Imprimir();
                 } 
             }
         }
@@ -241,65 +191,237 @@ public class DFS {
             {
                 if(col==1)
                 {//e
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2));//e
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2));//m
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2)); //p
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1)); //o
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila)); //a
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila)); //n
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila)); //u
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1)); //s
+                    //ListaAdy.Imprimir();
                 }
                 else
-                {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
+                {//o
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2));//m
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2));//p
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2)); //i
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1)); //n
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila)); //r
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila)); //a
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila)); //n
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1)); //e
+                    //ListaAdy.Imprimir();
                 }
             }
             else 
             { //col=0 || col=3
                 if(col==0)
                 {//s del lado
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());        
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.Imprimir();
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2)); //e
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2)); //m
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1)); //e
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila)); //n       
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila)); //u
+                    //ListaAdy.Imprimir();
                 }
                 else
                 {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());        
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2)); //p
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2)); //i
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila)); //r
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila)); //a      
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1)); //o
+                    //ListaAdy.Imprimir();
                 }
             }
         }
+        if (fila==3)
+        {
+            if (col==0 || col==3)
+            {
+                if (col==0){ //u
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2)); //s
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2)); //e
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1)); //n
+                    //ListaAdy.Imprimir();
+                }
+                else{//r
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2)); //o
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2)); //n
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1)); //a
+                    //ListaAdy.Imprimir();
+                }
+            }
+            else { //col 1 || col=2
+                if (col==1){//n
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2));//s
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2));
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1)); 
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1));
+                    //ListaAdy.Imprimir();
+                }
+                else{//a
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2));//e
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2)); //o
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2)); //n            
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1)); //r
+                    ListaAdy.AgregarNodoFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1)); //n
+                    //ListaAdy.Imprimir();
+                }            
+            }   
+        }
         return ListaAdy;
     }
+ 
+    /**
+ *  Busca el siguiente nodo en la lista adyacente proporcionada (ListaAdyacentes) 
+ * coincida con el carácter dado (LetraActual).
+ *
+ * @param LetraActual representa el nodo que se busca
+ * @param ListaAdyacentes La lista de adyacencia contenida en el nodo
+ * @return el siguiente nodo de la lista que sea igual a la letra que se busca, o null si no consigue nada o la lista esta vacia
+ */
     
+    
+    public static NodoDoble BuscarProximoNodo(NodoDoble LetraActual, ListaDoble ListaAdyacentes)
+    {
+        if (ListaAdyacentes.getpFirst() == null)
+            return null;
+        else
+        {
+            if(ListaAdyacentes.BuscarIndice(0).getData().toString().equals(LetraActual.getData().toString()))
+                return ListaAdyacentes.BuscarIndice(0);
+            else
+            {
+                ListaAdyacentes.setpFirst(ListaAdyacentes.BuscarIndice(0).getpNext());
+                return BuscarProximoNodo(LetraActual, ListaAdyacentes);
+            }
+        }
+    }
+    
+    /**
+    * Esta función marca un nodo como visitado o no en la lista (ListaBuscar) 
+    * según la posición dada (Posicion) y el valor de bVisitado.
+    *
+    * @param ListaBuscar La lista que tiene el nodo a marcar
+    * @param Posicion El String que representa la poscion del nodo(fila y columna).
+    * @param bVisitado El valor booleano que indica si hay que marcar el nodo
+    * @return La lista cambiada (ListaBuscar) con el nodo con la posicion marcada como visitado o no, que lo da el valor de bVisitado.
+    */
+    public static ListaDoble MarcarVisitado(ListaDoble ListaBuscar, String Posicion, boolean bVisitado)
+    {
+        int fila;
+        int col;
+        fila = (int)(Posicion.charAt(0))-48;
+        col = (int)(Posicion.charAt(1))-48;
+        if (fila == 0)
+        {
+            ListaBuscar.BuscarIndice(col).setVisitado(bVisitado);
+        }
+        else
+        {
+            ListaBuscar.BuscarIndice(col).getListaAdy().BuscarIndice(fila-1).setVisitado(bVisitado);
+        }
+        return ListaBuscar;
+    }
+    
+    /**
+     * 
+     * realiza una búsqueda recursiva en un grafo representado por una lista 
+     * doble (Lista) para encontrar una cadena de caracteres (LetraActual) 
+     * siguiendo las conexiones entre nodos.
+     * 
+     * @param Lista La lista doble que representa el grafo.
+     * @param NodoActualSopa  El nodo actual en la sopa de letras (representada por la lista).
+     * @param LetraActual El nodo que se busca en la cadena (el siguiente carácter a encontrar).
+     * @return 
+     */
+    
+    public static boolean DevolverABuscar(ListaDoble Lista, NodoDoble NodoActualSopa, NodoDoble LetraActual)
+    {
+        //LetraActual = A->[M]->O->R
+        //ListaAdyacente = Los de la M, la primera vez. s->m->e
+        //NodoActualSopa = [A] de la sopa
+        ListaDoble ListaAdyacentes = new ListaDoble();
+        boolean bEncontro;
+        
+        if (LetraActual==null)
+            return true;
+        else
+        {
+            ListaAdyacentes = BuscarNodosAdyacentes(Lista, NodoActualSopa);
+            bEncontro = false;
+            while (!bEncontro)
+            {
+                if(ListaAdyacentes.BuscarIndice(0).getData().toString().equals(LetraActual.getData().toString()))
+                {
+                    if (!ListaAdyacentes.BuscarIndice(0).getpOriginal().isVisitado())
+                    {
+                        LetraActual.setVisitado(true);
+                        LetraActual = LetraActual.getpNext();
+                        Lista = MarcarVisitado(Lista, NodoActualSopa.getPosition(), true);
+                        NodoActualSopa = ListaAdyacentes.BuscarIndice(0).getpOriginal();
+                        bEncontro = DevolverABuscar(Lista, NodoActualSopa, LetraActual);
+                        if (!bEncontro)
+                        {
+                            LetraActual = LetraActual.getpPrev();
+                            LetraActual.setVisitado(false);
+                            Lista = MarcarVisitado(Lista, NodoActualSopa.getPosition(), false);
+                            //NodoActualSopa = ListaAdyacentes.BuscarIndice(0).getpOriginal();
+                            ListaAdyacentes.setpFirst(ListaAdyacentes.BuscarIndice(0).getpNext());
+                            ListaAdyacentes.setSize(ListaAdyacentes.getSize()-1);
+                        }
+                    }
+                    else
+                    {
+                        ListaAdyacentes.setpFirst(ListaAdyacentes.BuscarIndice(0).getpNext());
+                        ListaAdyacentes.setSize(ListaAdyacentes.getSize()-1);
+                    }
+                }
+                else
+                {
+                    ListaAdyacentes.setpFirst(ListaAdyacentes.BuscarIndice(0).getpNext());
+                    ListaAdyacentes.setSize(ListaAdyacentes.getSize()-1);
+                }
+                if (!bEncontro && (ListaAdyacentes.getpFirst() == null))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+           
+    /**
+     * 
+     * Esta función busca una palabra dada (Palabra) en un grafo 
+     * representado por una lista doble (ListaBuscar).
+     * 
+     * 
+     * @param ListaBuscar La lista doble que representa el grafo
+     * @param Palabra  La palabra que se busca.
+     * @return  true Si la palabra se encuentra. False Si la palabra no se 
+     * encuentra en el grafo o si la longitud de la palabra es menor a 3.
+     * 
+     */            
+   
     public static boolean BuscarPalabra(ListaDoble ListaBuscar, String Palabra)
     {
+       if(Palabra.length()>=3){
         //Transformamos la palabra en una lista de las letras que vamos a buscar
         boolean bPalabraEncontrada = false;
         boolean bContinuarBusqueda = false;
-        int filaActual = 0;
-        int columnaActual = 0;
-        int letraActual = 0;
+        boolean bExisteSiguiente = false;
+        //int filaActual = 0;
+        //int columnaActual = 0;
+        int indiceletraActual = 0;
         int totalLetras = Palabra.length();
-        
+        ListaDoble ListaAdyacentes = new ListaDoble();
         ListaDoble ListaPalabra = new ListaDoble();
+        NodoDoble ProximoNodo;
+        
         for(int i=0; i< Palabra.length(); i++){
             ListaPalabra.AgregarFinal(Palabra.charAt(i));
         } //ejemplo: A -> M -> O -> R /P->I->N
@@ -308,46 +430,29 @@ public class DFS {
         //Posicion pPosicionInicial = BuscarPrimeraLetra(ListaBuscar, ListaPalabra.BuscarIndice(0));
         NodoDoble NodoListaActual = BuscarPrimeraLetra(ListaBuscar, ListaPalabra.BuscarIndice(0));
         
-        ListaPalabra.BuscarIndice(letraActual).setVisitado(true); //Letra ubicada
         //filaActual = pPosicionInicial.getPosFila();
         //columnaActual = pPosicionInicial.getPosColumna();
         if (NodoListaActual!=null)
         {
-            filaActual = (int) NodoListaActual.getPosition().charAt(0);
-            columnaActual = (int) NodoListaActual.getPosition().charAt(1);
-            bContinuarBusqueda = true;
-            letraActual++;
-            
-            NodoDoble LetraActual = ListaPalabra.BuscarIndice(letraActual);
-            while(bContinuarBusqueda)
-            {
-                //Partiendo del Nodo(filaActual,columnaActual) comenzamos la búsqueda de la letra inicial
-                //Llamada a la función que nos retorno los nodos adyacentes
-                
-                ListaDoble ListaAdyacentes = BuscarNodosAdyacentes(ListaBuscar, NodoListaActual);
-                //verificar la condicion de parada
-                if (letraActual==totalLetras)
-                {
-                    //validamos si todas las letras fueron encontradas.
-                    bPalabraEncontrada = true;
-                    for (int i=0; i<totalLetras; i++)
-                    {
-                         if(ListaPalabra.BuscarIndice(i).isVisitado())
-                             bPalabraEncontrada = true;
-                         else
-                         {
-                             bPalabraEncontrada = false;
-                             break; //for
-                         }
-                    }
-                    if (!bPalabraEncontrada)
-                        break; //while
-                }
-            }
-        }
+            ListaPalabra.BuscarIndice(indiceletraActual).setVisitado(true); //Letra visitada
+            ListaBuscar = MarcarVisitado(ListaBuscar, NodoListaActual.getPosition(), true);
         
-        return bPalabraEncontrada;        
+            //filaActual = (int) NodoListaActual.getPosition().charAt(0)-48;
+            //columnaActual = (int) NodoListaActual.getPosition().charAt(1)-48;
+            bContinuarBusqueda = true;
+            indiceletraActual++;
+            //Como las palabras son de al menos 3 letras, existe al menos dos letras más en la lista a buscar
+            NodoDoble LetraActual = ListaPalabra.BuscarIndice(indiceletraActual);
+
+            //Buscamos el resto de la palabra
+            bPalabraEncontrada = DevolverABuscar(ListaBuscar, NodoListaActual, LetraActual);
+        }
+        return bPalabraEncontrada;    
+       }else{System.out.println("La palabra tener 3 letras minimo");
+       }
+        return false;
     }
+
     
     
     /**
@@ -360,88 +465,14 @@ public class DFS {
     
     
  
-//    
-//// practica con joptionpane, pero debe ser una interfaz
-//  
-//    String input = JOptionPane.showInputDialog("inserta tu palabra: ");
-//
-//    //convierto mi input en nodos
-//    //contadorposition le asgina cada nodo un numero del 0 al 15 
-//    
-//    ListaDoble Listainsertar =new ListaDoble();
-//    int contadorposition = 0;
-//    for (char i : input.toCharArray()) {
-//    NodoDoble nuevoNodo = new NodoDoble(String.valueOf(i));
-//    
-//        if (cabeza == null) {
-//            
-//            cabeza = nuevoNodo;
-//            cola = nuevoNodo; // Inicializar cola con el primer nodo
-//            nuevoNodo.setPosition(contadorposition);
-//            Listainsertar.AgregarFinal(nuevoNodo);
-//            //System.out.println(nuevoNodo.getData());
-//            //System.out.println(nuevoNodo.getPosition());
-//            
-//                
-//        } else {
-//            cola.setpNext(nuevoNodo); // Agregar al final de la lista
-//            cola = nuevoNodo; // Actualizar la cola al nuevo nodo
-//            contadorposition ++;
-//            nuevoNodo.setPosition(contadorposition);
-//            Listainsertar.AgregarFinal(nuevoNodo);
-//            //System.out.println(nuevoNodo.getData());
-//            //System.out.println(nuevoNodo.getPosition());
-//        }
-            
-//    /**
-//     *
-//     * @param nuevoNodo
-//     */
-//    public static void algoritmodebusqueda(NodoDoble nuevoNodo) {
-//        if (nuevoNodo.getPosition() == 0) {
-//        // si la psoicion es 0 comienza
-//        // Visita el nodo 
-//        nuevoNodo.setVisitado(true);
-//        //imprima la primera letra
-//        System.out.print(nuevoNodo.getData() + " ");
-//        }
-//
-//        //esta es una idea de forma horizontal
-//        //tengo que usar las posiciones, para hacerlo vertical, horizonta o diagonal
-//        // llama de nuevo la funcion para ir al siguiente vecino
-//        if (nuevoNodo.getpNext()!= null && nuevoNodo.getpNext().isVisitado()) {
-//            nuevoNodo.setVisitado(true);
-//            algoritmo(nuevoNodo.getpNext());
-//        }
-//
-//        if (nuevoNodo.getpPrev() != null && nuevoNodo.getpPrev().isVisitado()) {
-//            nuevoNodo.getpPrev().setVisitado(true);
-//            algoritmo(nuevoNodo.getpPrev());
-//            
-//        }
         ///para probar
         ListaDoble Lista = new ListaDoble();
         Lista.AgregarFinal("a");
         Lista.AgregarFinal("s");
         Lista.AgregarFinal("o");
         Lista.AgregarFinal("l");
-//        Lista.AgregarFinal("e");
-//        Lista.AgregarFinal("m");
-//        Lista.AgregarFinal("p");
-//        Lista.AgregarFinal("i");
-//        Lista.AgregarFinal("s");
-//        Lista.AgregarFinal("e");
-//        Lista.AgregarFinal("o");
-//        Lista.AgregarFinal("n");
-//        Lista.AgregarFinal("u");
-//        Lista.AgregarFinal("n");
-//        Lista.AgregarFinal("a");
-//        Lista.AgregarFinal("r");
-        
-//        Lista.Asignaciondeindice();
-        
-        
-       
+            
+               
         Lista.BuscarIndice(0).AgregaAdya("e");
         Lista.BuscarIndice(0).AgregaAdya("s");
         Lista.BuscarIndice(0).AgregaAdya("u");
@@ -461,264 +492,24 @@ public class DFS {
         
         Lista.BuscarIndice(0).printAdjacencyList();
         
-        
+       
         String palabra1 = "amor";
         String palabra2 = "sol";
         String palabra3 = "pin";
         String palabra4= "una";
         String palabra5 = "ese";
-        String palabra6 = "qin";
+        String palabra6 = "am";
         
-        //boolean bExistePalabra = BuscarPalabra(Lista, palabra1);
-        
-                
-        //Lista.BuscarIndice(0).printAdjacencyList();
-        
-        //Funcion de Inicializacion de los visitados.
-        //Recorrrer la lista principal y colocar como setVisitado(false)
-        //Luego desde cada item navegar por los adyacentes.
-        //Antes de cada palabra hay que inicializar.
-        
-        //Funcion de Busqueda(Lista, palabra)
-        ListaDoble ListaPalabra = new ListaDoble();
-        ListaPalabra.AgregarFinal("q");
-        ListaPalabra.AgregarFinal("i");
-        ListaPalabra.AgregarFinal("n");
-        ListaPalabra.AgregarFinal("r"); //A -> M -> O -> R
-        
-        //Lista.Asignaciondeindice();
-        boolean bExistePalabra = BuscarPalabra(Lista, palabra5);
+        boolean bExistePalabra = BuscarPalabra(Lista, palabra6);
         if (!bExistePalabra)
-            System.out.println("La palabra no está en la sopa de letras.");
+            System.out.println("La palabra no esta en la sopa de letras.");
+        else
+            System.out.println("La palabra esta en la sopa de letras.");
         
-        //Posicion PosicionLetra = BuscarPrimeraLetra(Lista, ListaPalabra.BuscarIndice(0));
-        //System.out.println(PosicionLetra.getPosFila());
-        //System.out.println(PosicionLetra.getPosColumna());
-        
-         //adyacentes por posicion
-        
-        // Lista de nodos adyacentes a fila=0,col=0
-        int fila = 1;
-        int col = 3;
-        //Nodo (0,0) 
-        NodoDoble NodoActual = Lista.BuscarIndice(col);
-        //Lista.Imprimir();
-        ListaDoble ListaAdy = new ListaDoble();
-        if (fila==0) 
-        {//a
-            if (col==0 || col==3)
-            {
-                if (col==0)
-                {
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getData()); //s
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().getpFirst().getData()); //m
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().getpFirst().getData()); //e
-                    ListaAdy.Imprimir();
-                }
-                else
-                {
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().getpFirst().getData()); //i
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getListaAdy().getpFirst().getData()); //p
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getData()); //o
-                    ListaAdy.Imprimir();
-                }
-            }
-            else //col = 1 || col = 2
-            {
-                if (col==1){ //s
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpPrev().getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.Imprimir();
-                }
-                else
-                { //o
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData());//l
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());//i
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());//p
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());//m
-                    ListaAdy.Imprimir();
-                    
-                }
-            }
-        }
-        if (fila==3)
-        {
-            if (col==0 || col==3)
-            {
-                if (col==0){ //u
-                    ListaAdy.AgregarFinal(NodoActual.getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getListaAdy().BuscarIndice(fila-1).getData());    
-                    ListaAdy.Imprimir();
-                }
-                else{//r
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-            }
-            else { //col 1 || col=2
-                if (col==1){//n
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());            
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData()); 
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-                else{//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());            
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData()); 
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }            
-            }   
-        }
-
-        if(fila==1)
-        {
-            if(col==1 ||col==2)
-            {
-                if(col==1){//m
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-                else{
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                    
-                }
-            }
-            else 
-            { //col=0 || col=3
-                if(col==0)
-                {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData()); //a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getData()); //s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData()); //m
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData()); //e
-                    ListaAdy.AgregarFinal(NodoActual.getpNext().getData()); //s
-                    ListaAdy.Imprimir();
-                }
-                else
-                {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());        
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.Imprimir();
-                } 
-            }
-        }
-
-        if(fila==2)
-        {
-            if(col==1 ||col==2)
-            {
-                if(col==1)
-                {//e
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-                else
-                {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());//a
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());//s
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-            }
-            else 
-            { //col=0 || col=3
-                if(col==0)
-                {//s del lado
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col+1).getListaAdy().BuscarIndice(fila).getData());        
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.Imprimir();
-                }
-                else
-                {
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila-2).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col).getListaAdy().BuscarIndice(fila).getData());
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila).getData());        
-                    ListaAdy.AgregarFinal(Lista.BuscarIndice(col-1).getListaAdy().BuscarIndice(fila-1).getData());
-                    ListaAdy.Imprimir();
-                }
-            }
-        }   
        
-    
-         
-//          //dfs
-
-        int contadorprincipal = 0; //contador que me hace moverme en la lista principal
-        int contadorv = 1; //contador que me hace moverme en las listad ady
-        int contadorletraoficial = 0; // contador en la palabra1 o 2 o 3
-        int contadorinady = 0; // para usar la otra forma y no confundir contadores
-        
-        if(Lista.BuscarIndice(0).getData().equals(palabra1.charAt(0))){ //comienzo en "a" como primer elemento y la comparo con mi letra e la posicion 0 de la palabra 1 que es amor, le digo el nodo en el que comienza
-            while(Lista.getSize()<=4 && Lista.BuscarIndice(contadorprincipal).getListaAdy().getSize()<=3){
-            if(Lista.BuscarIndice(0).getListaAdy().BuscarIndice(contadorv).getData().equals(palabra1.charAt(contadorletraoficial))){
-                System.out.println("letra coincide");
-                contadorv++;
-                contadorletraoficial++;
-            } else if(!((Lista.BuscarIndice(0).getListaAdy().BuscarIndice(contadorv).equals(palabra1.charAt(contadorv))))){
-                contadorprincipal++;
-                contadorletraoficial++;
-                Lista.BuscarIndice(contadorprincipal).getData().equals(palabra1.charAt(contadorletraoficial));
-                System.out.println("letra coincide");
-                
-            }else{
-                contadorprincipal++;
-                Lista.BuscarIndice(contadorprincipal).getListaAdy().BuscarIndice(contadorinady).getData().equals(palabra1.charAt(contadorletraoficial));
-                System.out.println("letra coincide");
-                contadorv++;
-                contadorprincipal++;
-            }
-            
         }
-        }
-        
-    }
 }
+
     
     
 
