@@ -6,7 +6,7 @@ package dfs;
 
 /**
  *
- * @author laven
+ * @author Ada Arellano
  */
 public class Posicion {
     private int posFila;
@@ -28,6 +28,12 @@ public class Posicion {
     public int getPosColumna() {
         return posColumna;
     }
+
+    public void setPosColumna(int posColumna) {
+        this.posColumna = posColumna;
+    }
+}
+
 
     public void setPosColumna(int posColumna) {
         this.posColumna = posColumna;
