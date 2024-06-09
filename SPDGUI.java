@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 
+import DFS.DFS;
+import DFS.ListaDoble;
+import DFS.NodoDoble;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @Author: Annabella Mendoza
+ * @author: Annabella Mendoza
  *
  */
 /**
@@ -33,6 +37,7 @@ public class SPDGUI extends JFrame {
     private JLabel palabraLabel;
     private JTextField palabraTextField;
     private JLabel metodoBusquedaLabel;
+    private DFS dfs;
     private JComboBox<String> metodoBusquedaComboBox = new JComboBox<>(new String[]{"DFS", "BFS"});
     private JButton buscarPalabraButton = new JButton("Buscar Palabra");
     private JLabel resultadosBusquedaLabel;
@@ -47,6 +52,7 @@ public class SPDGUI extends JFrame {
         setTitle("Sopa de Letras");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
+        this.dfs = new DFS();
 
         // Etiquetas
         archivoLabel = new JLabel("Archivo:");
@@ -202,9 +208,23 @@ public class SPDGUI extends JFrame {
             List<String> palabrasEncontradas = new LinkedList<>();
             long tiempoEjecucion = 0;
     
+
+            /**
+             * Aquí estoy tratando de implementar las funciones del dfs en la interfaz gráfica, pero no me está funcionando.
+             */
             // Buscar la palabra en el diccionario
             if (metodoBusqueda.equals("DFS")) {
-                tiempoEjecucion = diccionario.buscarPalabraDFS(tableroYDiccionarioArea.getText(), palabra, palabrasEncontradas);
+                NodoDoble nodo = new NodoDoble();
+                NodoDoble lista = NodoDoble.getListaAdy();
+                string palabra = palabraTextField.getText();
+                this.dfs.buscarPalabra(lista, palabra);
+                boolean resultado = this.dfs.BuscarPalabra(lista, palabra);
+                if (resultado) {
+                    JOptionPane.showMessageDialog(null, "La palabra está en el diccionario.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "La palabra no está en el diccionario.");
+                }
+                
             } else if (metodoBusqueda.equals("BFS")) {
                 tiempoEjecucion = diccionario.buscarPalabraBFS(tableroYDiccionarioArea.getText(), palabra, palabrasEncontradas);
             }
@@ -257,6 +277,6 @@ public class SPDGUI extends JFrame {
              * @param args Los argumentos de la línea de comandos.
              */
             public static void main(String[] args) {
-                SwingUtilities.invokeLater(SPDGUI::new);
+                SwingUtilities.invokeLater(SopaDeLetrasGUI::new);
             }
             } 
