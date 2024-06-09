@@ -11,15 +11,18 @@ package dfs;
 public class NodoDoble<T> {
     private NodoDoble<T> pNext;
     private NodoDoble<T> pPrev;
+    private NodoDoble<T> pOriginal;
     private T data;
     private boolean visitado;
-    private ListaDoble ListaAdya;
     private String position;
+    private ListaDoble ListaAdya;
+
     
 
     public  NodoDoble(T data){
         this.pNext = null;
         this.pPrev = null;
+        this.pOriginal = null;
         this.data = data;
         this.visitado = false;
         this.ListaAdya = new ListaDoble();
@@ -42,21 +45,25 @@ public class NodoDoble<T> {
     
     public void AgregaAdya(String data) {
         NodoDoble<T> nuevoNodo = new NodoDoble(data);
-        if (ListaAdya.EsVacia()) {
-        nuevoNodo.setPosition("00"); // Set initial position as "00"
-        ListaAdya.setpFirst(nuevoNodo);
-        ListaAdya.setpLast(nuevoNodo);
-    } else {
-        NodoDoble<T> actualUltimo = ListaAdya.getpLast();
-        int currentColumn = Character.getNumericValue(actualUltimo.getPosition().charAt(0)) + 1;
-        int currentRow = Character.getNumericValue(actualUltimo.getPosition().charAt(1));
-
-        nuevoNodo.setPosition(String.valueOf(currentColumn) + String.valueOf(currentRow));
-        actualUltimo.setpNext(nuevoNodo);
-        nuevoNodo.setpPrev(actualUltimo);
-        ListaAdya.setpLast(nuevoNodo);
-
-    }
+        int columnaactual, filaactual;
+        if (ListaAdya.EsVacia()) 
+        {
+            filaactual = 1;
+            columnaactual = Character.getNumericValue(this.getPosition().charAt(1));
+            
+            nuevoNodo.setPosition(String.valueOf(filaactual)+String.valueOf(columnaactual));
+            
+            ListaAdya.setpFirst(nuevoNodo);
+            ListaAdya.setpLast(nuevoNodo);
+        } else {
+            NodoDoble<T> actualUltimo = ListaAdya.getpLast();
+            filaactual = Character.getNumericValue(actualUltimo.getPosition().charAt(0))+1;
+            columnaactual = Character.getNumericValue(actualUltimo.getPosition().charAt(1));
+            nuevoNodo.setPosition(String.valueOf(filaactual)+String.valueOf(columnaactual));
+            actualUltimo.setpNext(nuevoNodo);
+            nuevoNodo.setpPrev(actualUltimo);
+            ListaAdya.setpLast(nuevoNodo);
+        }
             
     }
     
@@ -74,10 +81,17 @@ public class NodoDoble<T> {
         return pPrev;
     }
     
-    public void setpPrev(NodoDoble<T> pNext) {
+    public void setpPrev(NodoDoble<T> pPrev) {
         this.pPrev = pPrev;
     }
+    
+    public NodoDoble<T> getpOriginal() {
+        return pOriginal;
+    }
 
+    public void setpOriginal(NodoDoble<T> pOriginal) {
+        this.pOriginal = pOriginal;
+    }
 
     public void setpLast(NodoDoble<T> pPrev) {
         this.pPrev = pPrev;
@@ -96,7 +110,7 @@ public class NodoDoble<T> {
     }
 
     public void setVisitado(boolean visitado) {
-        this.visitado = false;
+        this.visitado = visitado;
     }
 
     public ListaDoble getListaAdy() {
@@ -122,3 +136,8 @@ public class NodoDoble<T> {
     
    
 }
+ 
+    
+    
+    
+   
