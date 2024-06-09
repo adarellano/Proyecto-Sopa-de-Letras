@@ -277,6 +277,6 @@ public class SPDGUI extends JFrame {
              * @param args Los argumentos de la línea de comandos.
              */
             public static void main(String[] args) {
-                SwingUtilities.invokeLater(SopaDeLetrasGUI::new);
+                SwingUtilities.invokeLater(SPDGUI::new);
             }
             } 
