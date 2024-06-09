@@ -26,10 +26,31 @@ public class ListaDoble<T> {
 
     }
 
+    /**
+     * 
+     * @return True si esta vacia (pFirst es null), False si no.
+     */
     public boolean EsVacia() {
         return this.pFirst == null;
     }
 
+    /**
+     * 
+     * Se establece la posición del nuevo nodo como "00" (primera posición).
+     * Se obtiene el valor del caracter en la posición 0 de la cadena de posición
+     * del nodo actual (nodo.getPosition().charAt(0)) y se convierte a entero.
+     * 
+     * Se obtiene el valor del caracter en la posición 1 de la cadena de posición del nodo 
+     * actual (nodo.getPosition().charAt(1)) y se convierte a entero.
+     * 
+     * Se incrementa la columna (valor entero en la posición 1) en 1.
+     * 
+     * Se crea una nueva cadena de posición (Position) concatenando la fila (valor 
+     * entero en la posición 0) y la nueva columna.
+     * 
+     * @param data  El dato que se almacena en el nodo (puede ser de cualquier tipo genérico T)
+     * en este caso String
+     */
      public void AgregarInicio(T data) {
         NodoDoble nodo = new NodoDoble(data);
         if (EsVacia()) {
@@ -48,6 +69,13 @@ public class ListaDoble<T> {
         size++;
     }
 
+     /**
+      * 
+      * La función crea un nuevo nodo doble (nodo) con el valor del parámetro data
+      * agregandolo al final de la lista
+      * 
+      * @param data El dato que se almacena en el nodo (puede ser de cualquier tipo genérico T).
+      */
     public void AgregarFinal(T data) {
         NodoDoble<T> nodo = new NodoDoble(data);
         if (EsVacia()) {
@@ -69,6 +97,13 @@ public class ListaDoble<T> {
         size++;
     }
     
+    /**
+     * 
+     * Esta función agrega un nuevo nodo al final de la lista doble, copiando 
+     * el dato del nodo original proporcionado.
+     * 
+     * @param nodoOriginal  El nodo original del cual se copiará el dato.
+     */
     public void AgregarNodoFinal(NodoDoble nodoOriginal) {
         NodoDoble<T> nodo = new NodoDoble(nodoOriginal.getData().toString());
         nodo.setpOriginal(nodoOriginal);
@@ -92,6 +127,9 @@ public class ListaDoble<T> {
         size++;
     }
     
+    /**
+     * Imprime la informacion del nodo de una lista, con su posicion
+     */
     public void Imprimir(){
         NodoDoble pAux = pFirst;
         while(pAux != null){
@@ -100,6 +138,9 @@ public class ListaDoble<T> {
         }
     }
     
+    /**
+     *  Imprime el nodo de una lista con su posicion original en el grafo
+     */
     public void ImprimirNodos(){
         NodoDoble pAux = pFirst;
         while(pAux != null){
@@ -108,6 +149,9 @@ public class ListaDoble<T> {
         }
     }
     
+    /**
+     *  imprime la lista de adyacencia del nodo deseado
+     */
      public void ImprimirListaAdyacencia() {
         NodoDoble pAux = pFirst;
         while (pAux != null) {
@@ -116,6 +160,14 @@ public class ListaDoble<T> {
         }
      }
     
+     /**
+      * 
+      * Esta función busca un nodo en un índice específico dentro de la lista doble 
+      * segun su posicion en la misma
+      * 
+      * @param index  El índice del nodo que se desea buscar (comienza en 0).
+      * @return El nodo encontrado en el índice especificado, o null si no se encuentra.
+      */
     public NodoDoble BuscarIndice(int index){
         NodoDoble pAux= pFirst;
         int count = 0;
@@ -131,6 +183,15 @@ public class ListaDoble<T> {
         }
     }
     
+    /**
+     * 
+     *  Esta función busca un nodo en un índice específico dentro de la lista doble 
+     *  segun su data.    
+     * 
+     * @param index El índice del nodo del cual se desea obtener el dato (comienza en 0).
+     * @return El dato almacenado en el nodo del índice especificado, o null si 
+     * no se encuentra el nodo.
+     */
     public T BuscarDataIndice(int index){
         NodoDoble<T> pAux =this.BuscarIndice(index);
         if (pAux != null){
@@ -140,21 +201,7 @@ public class ListaDoble<T> {
         }
     }
     
-    public void Asignaciondeindice(){
-        NodoDoble pAux = pFirst;
-        while(pAux != null){
-            for(int i=1;i<5;i++){
-                for(int j=1;j<5;j++){
-                    String filaColumna = String.valueOf(i)+String.valueOf(j);
-                    
-                    pAux.setPosition(filaColumna);
-                }
-            }
-                
-            pAux = pAux.getpNext();
-        }
-    }
-    
+
     
     
     public NodoDoble<T> getpFirst() {
@@ -192,3 +239,4 @@ public class ListaDoble<T> {
     
 
 }
+
