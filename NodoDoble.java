@@ -29,6 +29,14 @@ public class NodoDoble<T> {
         
         
     }
+    /**
+     * La función imprime el dato del nodo actual  seguido de la lista de 
+     * sus nodos adyacentes.
+     * Si la lista de adyacencia está vacía, se imprime un mensaje que indica 
+     * "No hay adyacentes".
+     *  En caso contrario, se itera a través de la lista de adyacencia, imprimiendo el 
+     * dato de cada nodo vecino seguido de una coma y un espacio.
+     */
     
     public void printAdjacencyList() {
         System.out.println(data);
@@ -43,6 +51,14 @@ public class NodoDoble<T> {
         }
     }
     
+    /**
+     * 
+     * La función crea un nuevo nodo doble (nuevoNodo) con el valor del parámetro 
+     * data y lo agrega a la lista vacia del nodo que se esta seleccionando, 
+     * si esta vacio lo agrega de primero, si no, lo agrega de ultimo
+     *
+     * @param data El dato que se almacena en el nodo adyacente (puede ser un String)
+     */
     public void AgregaAdya(String data) {
         NodoDoble<T> nuevoNodo = new NodoDoble(data);
         int columnaactual, filaactual;
@@ -129,10 +145,7 @@ public class NodoDoble<T> {
     public void setPosition(String position) {
         this.position = position;
     }
-
  
-    
-    
     
    
 }
