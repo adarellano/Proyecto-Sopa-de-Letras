@@ -7,7 +7,7 @@ package dfs;
 
 /**
  *
- * @author Ada A
+ * @author Ada Arellano
  */
 public class ListaDoble<T> {
 
@@ -43,7 +43,6 @@ public class ListaDoble<T> {
             j++;
             String Position = String.valueOf(i)+String.valueOf(j);
             nodo.getpNext().setPosition(Position);
-            nodo.setPosition("00");
             pFirst = nodo;
         }
         size++;
@@ -70,10 +69,41 @@ public class ListaDoble<T> {
         size++;
     }
     
+    public void AgregarNodoFinal(NodoDoble nodoOriginal) {
+        NodoDoble<T> nodo = new NodoDoble(nodoOriginal.getData().toString());
+        nodo.setpOriginal(nodoOriginal);
+        if (EsVacia()) {
+            nodo.setPosition("00");
+            pLast = nodo;
+            pFirst = nodo;
+            
+        } else {
+            NodoDoble Aux = pLast;
+            int i=Aux.getPosition().charAt(0)-48;
+            int j=Aux.getPosition().charAt(1)-48;
+            j++;
+            pLast.setpNext(nodo);
+            nodo.setpLast(pLast);
+            String Position = String.valueOf(i)+String.valueOf(j);
+            nodo.setPosition(Position);
+            pLast = nodo;
+            
+        }
+        size++;
+    }
+    
     public void Imprimir(){
         NodoDoble pAux = pFirst;
         while(pAux != null){
-            System.out.println(pAux.getData());
+            System.out.println(pAux.getData() + " - " + pAux.getPosition());
+            pAux = pAux.getpNext();
+        }
+    }
+    
+    public void ImprimirNodos(){
+        NodoDoble pAux = pFirst;
+        while(pAux != null){
+            System.out.println(pAux.getpOriginal().getData() + " - " + pAux.getpOriginal().getPosition());
             pAux = pAux.getpNext();
         }
     }
