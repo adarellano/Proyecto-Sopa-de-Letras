@@ -235,6 +235,496 @@ public class ListaDoble<T> {
     public void setMaxsize(int maxsize) {
         this.maxsize = maxsize;
     }
+      /**
+ * Recorre una ListaDoble y comprueba si algún nodo contiene un dato específico. Si lo encuentra, imprime la lista adyacente al nodo.
+ * 
+ * @param lista la ListaDoble que se recorrerá
+ * @param data el dato a buscar en los nodos de la lista
+ */
+    }public void recorrer(ListaDoble lista,T data){
+        lista.setposicionnodo(lista);
+        NodoDoble pAux= pFirst;
+        while(pAux != null){
+          if(pAux.getData().equals(data))
+                pAux.getListaAdy().Imprimir();
+                       
+                    
+                    
+        pAux = pAux.getpNext();
+    
+            }
+         /**
+ * Establece la posición de cada nodo en una ListaDoble recorriendo la lista.
+ * 
+ * @param T la ListaDoble cuyos nodos se establecerán con su posición
+ */
+    } public void setposicionnodo(ListaDoble T) {
+        NodoDoble pAux = pFirst;
+    int contador = 0;
+        
+    while(pAux != null){
+        pAux.setPosition(contador);
+      System.out.println(pAux.getPosition()); // Imprime la posición antes de mover el puntero
+        pAux = pAux.getpNext();
+        contador ++;
+    }
+    /**
+ * Realiza operaciones sobre una ListaDoble, como búsqueda de índices, agregar elementos y establecer posiciones.
+ * 
+ * @param T la ListaDoble en la que se realizarán las operaciones
+ */
+}   public void setADY(ListaDoble T) {
+        T.setposicionnodo(T);
+// nodo 0      
+    T.BuscarIndice(0).AgregaAdy(String.valueOf(T.BuscarIndice(1).getData())); 
+     T.BuscarIndice(0).getListaAdy().BuscarIndice(0).setPosition(1);
+     
+    T.BuscarIndice(0).AgregaAdy(String.valueOf(T.BuscarIndice(4).getData()));
+    T.BuscarIndice(0).getListaAdy().BuscarIndice(1).setPosition(4);
+    
+    T.BuscarIndice(0).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+    T.BuscarIndice(0).getListaAdy().BuscarIndice(2).setPosition(5);
+    
+    
+//    nodo 1 
+    
+    T.BuscarIndice(1).AgregaAdy(String.valueOf(T.BuscarIndice(0).getData()));
+    T.BuscarIndice(1).getListaAdy().BuscarIndice(0).setPosition(0);
+    
+    T.BuscarIndice(1).AgregaAdy(String.valueOf(T.BuscarIndice(2).getData()));
+    T.BuscarIndice(1).getListaAdy().BuscarIndice(1).setPosition(2);
+    
+    T.BuscarIndice(1).AgregaAdy(String.valueOf(T.BuscarIndice(4).getData()));
+    T.BuscarIndice(1).getListaAdy().BuscarIndice(2).setPosition(4);
+    
+    T.BuscarIndice(1).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+    T.BuscarIndice(1).getListaAdy().BuscarIndice(3).setPosition(5);
+    
+    T.BuscarIndice(1).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+    T.BuscarIndice(1).getListaAdy().BuscarIndice(4).setPosition(6);
+    
+    
+    
+//  nodo 2  
+     T.BuscarIndice(2).AgregaAdy(String.valueOf(T.BuscarIndice(1).getData()));
+     T.BuscarIndice(2).getListaAdy().BuscarIndice(0).setPosition(1);
+    
+     T.BuscarIndice(2).AgregaAdy(String.valueOf(T.BuscarIndice(3).getData()));
+     T.BuscarIndice(2).getListaAdy().BuscarIndice(1).setPosition(3); 
+      
+     T.BuscarIndice(2).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+     T.BuscarIndice(2).getListaAdy().BuscarIndice(2).setPosition(5);
+     
+     T.BuscarIndice(2).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+     T.BuscarIndice(2).getListaAdy().BuscarIndice(3).setPosition(6);
+     
+     T.BuscarIndice(2).AgregaAdy(String.valueOf(T.BuscarIndice(7).getData()));
+     T.BuscarIndice(2).getListaAdy().BuscarIndice(4).setPosition(7);
+     
+     
+//   nodo 3   
+     
+      T.BuscarIndice(3).AgregaAdy(String.valueOf(T.BuscarIndice(2).getData()));
+      T.BuscarIndice(3).getListaAdy().BuscarIndice(0).setPosition(2);
+      
+      T.BuscarIndice(3).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+      T.BuscarIndice(3).getListaAdy().BuscarIndice(1).setPosition(6);
+      
+      T.BuscarIndice(3).AgregaAdy(String.valueOf(T.BuscarIndice(7).getData()));
+      T.BuscarIndice(3).getListaAdy().BuscarIndice(2).setPosition(7);
+      
+//  nodo 4 
+      
+      
+      T.BuscarIndice(4).AgregaAdy(String.valueOf(T.BuscarIndice(0).getData()));
+      T.BuscarIndice(4).getListaAdy().BuscarIndice(0).setPosition(0);
+      
+      T.BuscarIndice(4).AgregaAdy(String.valueOf(T.BuscarIndice(1).getData()));
+      T.BuscarIndice(4).getListaAdy().BuscarIndice(1).setPosition(1);
+      
+      T.BuscarIndice(4).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+      T.BuscarIndice(4).getListaAdy().BuscarIndice(2).setPosition(5);
+      
+      T.BuscarIndice(4).AgregaAdy(String.valueOf(T.BuscarIndice(8).getData()));
+      T.BuscarIndice(4).getListaAdy().BuscarIndice(3).setPosition(8);
+     
+      
+      T.BuscarIndice(4).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+      T.BuscarIndice(4).getListaAdy().BuscarIndice(4).setPosition(9);
+      
+      
+////      nodo 5
+
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(0).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(0).setPosition(0);
+        
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(1).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(1).setPosition(1);
+        
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(2).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(2).setPosition(2);
+      
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(4).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(3).setPosition(4);
+        
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(4).setPosition(6);
+        
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(8).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(5).setPosition(8);
+        
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(6).setPosition(9);
+        
+        T.BuscarIndice(5).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+        T.BuscarIndice(5).getListaAdy().BuscarIndice(7).setPosition(10);
+        
+        
+//        nodo 6 
+
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(1).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(0).setPosition(1);
+        
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(2).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(1).setPosition(2);
+        
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(3).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(2).setPosition(3);
+        
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(3).setPosition(5);
+        
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(7).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(4).setPosition(7);
+        
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(5).setPosition(9);
+        
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(6).setPosition(10);
+        
+        T.BuscarIndice(6).AgregaAdy(String.valueOf(T.BuscarIndice(11).getData()));
+        T.BuscarIndice(6).getListaAdy().BuscarIndice(7).setPosition(11);
+        
+//        nodo 7 
+
+        T.BuscarIndice(7).AgregaAdy(String.valueOf(T.BuscarIndice(2).getData()));
+        T.BuscarIndice(7).getListaAdy().BuscarIndice(0).setPosition(2);
+        
+        T.BuscarIndice(7).AgregaAdy(String.valueOf(T.BuscarIndice(3).getData()));
+        T.BuscarIndice(7).getListaAdy().BuscarIndice(1).setPosition(3);
+        
+        T.BuscarIndice(7).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+        T.BuscarIndice(7).getListaAdy().BuscarIndice(2).setPosition(6);
+        
+        T.BuscarIndice(7).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+        T.BuscarIndice(7).getListaAdy().BuscarIndice(3).setPosition(10);
+        
+        T.BuscarIndice(7).AgregaAdy(String.valueOf(T.BuscarIndice(11).getData()));
+        T.BuscarIndice(7).getListaAdy().BuscarIndice(4).setPosition(11);
+        
+        
+//        nodo 8 
+        
+         T.BuscarIndice(8).AgregaAdy(String.valueOf(T.BuscarIndice(4).getData()));
+         T.BuscarIndice(8).getListaAdy().BuscarIndice(0).setPosition(4);
+         
+         T.BuscarIndice(8).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+         T.BuscarIndice(8).getListaAdy().BuscarIndice(1).setPosition(5);
+
+         T.BuscarIndice(8).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+         T.BuscarIndice(8).getListaAdy().BuscarIndice(2).setPosition(9);
+         
+         T.BuscarIndice(8).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+         T.BuscarIndice(8).getListaAdy().BuscarIndice(3).setPosition(9);
+         
+         T.BuscarIndice(8).AgregaAdy(String.valueOf(T.BuscarIndice(12).getData()));
+         T.BuscarIndice(8).getListaAdy().BuscarIndice(4).setPosition(12);
+
+         T.BuscarIndice(8).AgregaAdy(String.valueOf(T.BuscarIndice(13).getData()));
+         T.BuscarIndice(8).getListaAdy().BuscarIndice(5).setPosition(13);
+         
+//         nodo 9
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(4).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(0).setPosition(4);
+          
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(1).setPosition(5);
+         
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(2).setPosition(6);
+         
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(8).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(3).setPosition(8);
+         
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(4).setPosition(10);
+         
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(12).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(5).setPosition(12);
+         
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(13).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(6).setPosition(13);
+         
+         T.BuscarIndice(9).AgregaAdy(String.valueOf(T.BuscarIndice(14).getData()));
+         T.BuscarIndice(9).getListaAdy().BuscarIndice(7).setPosition(14);
+         
+         
+//         nodo 10
+        T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(5).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(0).setPosition(5);
+         
+          T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(1).setPosition(6);
+         
+          T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(7).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(2).setPosition(7);
+         
+          T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(3).setPosition(9);
+         
+          T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(11).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(4).setPosition(11);
+         
+          T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(13).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(5).setPosition(13);
+         
+          T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(14).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(6).setPosition(14);
+         
+          T.BuscarIndice(10).AgregaAdy(String.valueOf(T.BuscarIndice(15).getData()));
+         T.BuscarIndice(10).getListaAdy().BuscarIndice(7).setPosition(15);
+         
+         
+//         NODO 11 
+        T.BuscarIndice(11).AgregaAdy(String.valueOf(T.BuscarIndice(6).getData()));
+         T.BuscarIndice(11).getListaAdy().BuscarIndice(0).setPosition(6);
+         
+         T.BuscarIndice(11).AgregaAdy(String.valueOf(T.BuscarIndice(7).getData()));
+         T.BuscarIndice(11).getListaAdy().BuscarIndice(1).setPosition(7);
+         
+          T.BuscarIndice(11).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+         T.BuscarIndice(11).getListaAdy().BuscarIndice(2).setPosition(10);
+         
+          T.BuscarIndice(11).AgregaAdy(String.valueOf(T.BuscarIndice(14).getData()));
+         T.BuscarIndice(11).getListaAdy().BuscarIndice(3).setPosition(14);
+         
+          T.BuscarIndice(11).AgregaAdy(String.valueOf(T.BuscarIndice(15).getData()));
+         T.BuscarIndice(11).getListaAdy().BuscarIndice(4).setPosition(15);
+         
+//         NODO 12
+         T.BuscarIndice(12).AgregaAdy(String.valueOf(T.BuscarIndice(8).getData()));
+         T.BuscarIndice(12).getListaAdy().BuscarIndice(0).setPosition(8);
+         
+         T.BuscarIndice(12).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+         T.BuscarIndice(12).getListaAdy().BuscarIndice(1).setPosition(9);
+         
+         T.BuscarIndice(12).AgregaAdy(String.valueOf(T.BuscarIndice(13).getData()));
+         T.BuscarIndice(12).getListaAdy().BuscarIndice(2).setPosition(13);
+         
+//         NODO 13 
+
+         T.BuscarIndice(13).AgregaAdy(String.valueOf(T.BuscarIndice(8).getData()));
+         T.BuscarIndice(13).getListaAdy().BuscarIndice(0).setPosition(8);
+         
+         T.BuscarIndice(13).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+         T.BuscarIndice(13).getListaAdy().BuscarIndice(1).setPosition(9);
+         
+         T.BuscarIndice(13).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+         T.BuscarIndice(13).getListaAdy().BuscarIndice(2).setPosition(10);
+         
+         T.BuscarIndice(13).AgregaAdy(String.valueOf(T.BuscarIndice(12).getData()));
+         T.BuscarIndice(13).getListaAdy().BuscarIndice(3).setPosition(12);
+         
+         T.BuscarIndice(13).AgregaAdy(String.valueOf(T.BuscarIndice(14).getData()));
+         T.BuscarIndice(13).getListaAdy().BuscarIndice(4).setPosition(14);
+         
+         
+//         NODO 14
+         T.BuscarIndice(14).AgregaAdy(String.valueOf(T.BuscarIndice(9).getData()));
+         T.BuscarIndice(14).getListaAdy().BuscarIndice(0).setPosition(9);
+         
+         T.BuscarIndice(14).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+         T.BuscarIndice(14).getListaAdy().BuscarIndice(1).setPosition(10);
+         
+         T.BuscarIndice(14).AgregaAdy(String.valueOf(T.BuscarIndice(11).getData()));
+         T.BuscarIndice(14).getListaAdy().BuscarIndice(2).setPosition(11);
+         
+         T.BuscarIndice(14).AgregaAdy(String.valueOf(T.BuscarIndice(13).getData()));
+         T.BuscarIndice(14).getListaAdy().BuscarIndice(3).setPosition(13);
+         
+         T.BuscarIndice(14).AgregaAdy(String.valueOf(T.BuscarIndice(15).getData()));
+         T.BuscarIndice(14).getListaAdy().BuscarIndice(4).setPosition(15);
+         
+//         nodo 15
+            T.BuscarIndice(15).AgregaAdy(String.valueOf(T.BuscarIndice(10).getData()));
+         T.BuscarIndice(15).getListaAdy().BuscarIndice(0).setPosition(10);
+         
+         T.BuscarIndice(15).AgregaAdy(String.valueOf(T.BuscarIndice(11).getData()));
+         T.BuscarIndice(15).getListaAdy().BuscarIndice(1).setPosition(11);
+         
+         T.BuscarIndice(15).AgregaAdy(String.valueOf(T.BuscarIndice(14).getData()));
+         T.BuscarIndice(15).getListaAdy().BuscarIndice(2).setPosition(14);
+     
+  /**
+ * Implementa el algoritmo BFS para recorrer una ListaDoble y buscar una palabra específica de 4 letras. Si la palabra se encuentra, se imprime un mensaje confirmando el hallazgo.
+ * 
+ * @param lista la ListaDoble que se recorrerá
+ * @param data la palabra a buscar en la lista
+ */
+    }public void BFS4(ListaDoble lista,  String data) {
+        lista.setADY(lista);
+        int largo = data.length();
+        String L1 = String.valueOf(data.charAt(largo-largo)); //a
+        String L2 = String.valueOf(data.charAt(largo-3));//m
+        String L3 = String.valueOf(data.charAt(largo-2));//o
+        String L4 = String.valueOf(data.charAt(largo-1));//r
+        
+        NodoDoble pAux = pFirst;
+        
+        
+        while(pAux != null) {
+            if (pAux.getData().equals(L1)) {
+               ListaDoble list = pAux.getListaAdy();
+               pAux.getListaAdy().Imprimir();
+                int p0 = list.posicionnodo(list,L2);
+                if (list.contiene(list, L2)== true){
+//                    System.out.println("LA LISTA DE ADYACENCIA DE A TIENE A M ")
+                        ListaDoble list1= lista.BuscarIndice(p0).getListaAdy();
+                            if(list1.contiene(list,L1)&& list1.contiene(list, L3)){
+//                                System.out.println("buen camino ");
+                                int p1 = list1.posicionnodo(list1,L3);
+                                System.out.println(p1);
+                                ListaDoble list2 = lista.BuscarIndice(p1).getListaAdy();
+                                list2.Imprimir();
+                                if(list2.contiene(list2, L2)&& list2.contiene(list2, L4)){
+                                    
+                                    int p2 = list2.posicionnodo(list2, L4);
+                                    System.out.println(p2);
+                                    ListaDoble list3 = lista.BuscarIndice(p2).getListaAdy();
+                                    if(list3.contiene(list, L3)){
+                                        System.out.println("PALABRA  ENCONTRADA");
+                                    }
+                                    else {
+                                        System.out.println("la letra no esta  ");
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                }
+                                    
+                                
+                                
+                                
+                                
+                            }
+                                                  
+                        
+                        
+            }
+                
+                    
+                        
+                       
+            }
+            pAux = pAux.getpNext();
+        }
+        /**
+ * Comprueba si una ListaDoble contiene un dato específico.
+ * 
+ * @param lista la ListaDoble que se examinará
+ * @param data el dato a buscar en la lista
+ * @return true si el dato se encuentra en la lista, false en caso contrario
+ */
+    }public boolean contiene(ListaDoble lista,T data){
+        NodoDoble pAux = pFirst;
+
+        while(pAux != null) {
+            if(pAux.getData().equals(data)) {
+                return true;
+            }
+            pAux = pAux.getpNext();
+        }
+
+        return false;
+        
+        /**
+ * Devuelve la posición del primer nodo en una ListaDoble que contiene un dato específico. Si no se encuentra el dato en la lista, se devolverá el valor predeterminado 1.
+ * 
+ * @param lista la ListaDoble que se examinará
+ * @param data el dato a buscar en la lista
+ * @return la posición del nodo que contiene el dato buscado, o 1 si no se encuentra el dato
+ */
+    }public int posicionnodo(ListaDoble lista,T data){
+        
+        NodoDoble pAux= pFirst;
+        while(pAux != null){
+          if(pAux.getData().equals(data))
+                return pAux.getPosition();
+                       
+                    
+                   
+        pAux = pAux.getpNext();
+    
+            }
+        return 1;
+        
+        /**
+ * Implementa el algoritmo BFS para recorrer una ListaDoble y buscar una palabra específica de 3 letras. Si la palabra se encuentra, se imprime un mensaje confirmando el hallazgo.
+ * 
+ * @param lista la ListaDoble que se recorrerá
+ * @param data la palabra a buscar en la lista
+ */
+    }public void BFS3(ListaDoble lista,  String data) {
+        lista.setADY(lista);
+        int largo = data.length();
+        String L1 = String.valueOf(data.charAt(largo-largo)); //a
+        String L2 = String.valueOf(data.charAt(largo-2));//m
+        String L3 = String.valueOf(data.charAt(largo-1));//o
+       
+        
+        NodoDoble pAux = pFirst;
+        
+        
+        while(pAux != null) {
+            if (pAux.getData().equals(L1)) {
+               ListaDoble list = pAux.getListaAdy();
+                int p0 = list.posicionnodo(list,L2);
+                if (list.contiene(list, L2)== true){
+                        ListaDoble list1= lista.BuscarIndice(p0).getListaAdy();
+                            if(list1.contiene(list,L1)&& list1.contiene(list, L3)){
+                                int p1 = list1.posicionnodo(list1,L3);
+                                System.out.println(p1);
+                                ListaDoble list2 = lista.BuscarIndice(p1).getListaAdy();                              
+                                if(list2.contiene(list2, L2)){
+                                    System.out.println("PALABRA  ENCONTRADA");
+                                    }
+                                    else {
+                                        System.out.println("la letra no esta  ");
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                }
+                                    
+                                
+                                
+                                
+                                
+                            }
+                                           
+                       
+         
+            pAux = pAux.getpNext();
+        }
+            
+        }
+    }
+         
+    
+}
     
     
 
