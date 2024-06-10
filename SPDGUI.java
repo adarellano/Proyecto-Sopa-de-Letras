@@ -309,6 +309,33 @@ public class SPDGUI extends JFrame {
                 
             } else if (metodoBusqueda.equals("BFS")) {
                 tiempoEjecucion = diccionario.buscarPalabraBFS(tableroYDiccionarioArea.getText(), palabra, palabrasEncontradas);
+
+               ListaDoble sopa = new ListaDoble();
+        sopa.AgregarFinal("p");
+        sopa.AgregarFinal("a");
+        sopa.AgregarFinal("t");
+        sopa.AgregarFinal("a");
+        sopa.AgregarFinal("c");
+        sopa.AgregarFinal("h");
+        sopa.AgregarFinal("a");
+        sopa.AgregarFinal("o");
+        sopa.AgregarFinal("o");
+        sopa.AgregarFinal("j");
+        sopa.AgregarFinal("k");
+        sopa.AgregarFinal("m");
+        sopa.AgregarFinal("r");
+        sopa.AgregarFinal("o");
+        sopa.AgregarFinal("o");
+        sopa.AgregarFinal("b");
+        
+        sopa.BFS3(sopa, "oro");
+        sopa.BFS4(sopa, "pata");
+        sopa.BFS4(sopa, "chao ");
+
+
+
+
+                
             }
     
             // Mostrar los resultados en el área de texto
