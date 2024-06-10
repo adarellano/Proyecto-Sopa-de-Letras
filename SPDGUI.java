@@ -17,6 +17,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author: Annabella Mendoza
@@ -260,18 +263,49 @@ public class SPDGUI extends JFrame {
              */
             // Buscar la palabra en el diccionario
             if (metodoBusqueda.equals("DFS")) {
-                String filePath = "txt1.txt";
+                ListaDoble Lista = new ListaDoble();
+        Lista.AgregarFinal("O");
+        Lista.AgregarFinal("R");
+        Lista.AgregarFinal("O");
+        Lista.AgregarFinal("M");    
+               
+        Lista.BuscarIndice(0).AgregaAdya("T");
+        Lista.BuscarIndice(0).AgregaAdya("R");
+        Lista.BuscarIndice(0).AgregaAdya("A");
+        
+        
+        Lista.BuscarIndice(1).AgregaAdya("C");
+        Lista.BuscarIndice(1).AgregaAdya("H");
+        Lista.BuscarIndice(1).AgregaAdya("A");
+        
+        Lista.BuscarIndice(2).AgregaAdya("O");
+        Lista.BuscarIndice(2).AgregaAdya("T");
+        Lista.BuscarIndice(2).AgregaAdya("O");
+        
+        Lista.BuscarIndice(3).AgregaAdya("R");
+        Lista.BuscarIndice(3).AgregaAdya("A");
+        Lista.BuscarIndice(3).AgregaAdya("O");
+        
                 
-                ListaDoble randomWords = getRandomWords(filePath,3);
-                randomWords.Imprimir();
-
                 
-                boolean bExistePalabra = dfs.BuscarPalabra(randomWords, palabra);
-                if (!bExistePalabra)
-                    System.out.println("La palabra no esta en la sopa de letras.");
-                else
+                boolean bExistePalabra = DFS.BuscarPalabra(Lista, palabra);
+                if (bExistePalabra){
+                    palabrasEncontradas.add(palabra);
                     System.out.println("La palabra esta en la sopa de letras.");
-         
+                }else{
+                    System.out.println("La palabra no esta en la sopa de letras.");
+        String resultado;
+        if (palabrasEncontradas.isEmpty()) {
+        resultado = "La palabra no se encontró en el tablero.\n";
+        } else {
+        resultado = "Palabras encontradas: \n";
+        for (String palabraEncontrada : palabrasEncontradas) {
+            resultado += palabraEncontrada + "\n";
+        }
+          // Mostrar el tiempo de ejecución
+            resultado += "\nTiempo de ejecución: " + tiempoEjecucion + " milisegundos";
+            resultadosBusquedaArea.setText(resultado);}}
+
                 
             } else if (metodoBusqueda.equals("BFS")) {
                 tiempoEjecucion = diccionario.buscarPalabraBFS(tableroYDiccionarioArea.getText(), palabra, palabrasEncontradas);
@@ -319,116 +353,121 @@ public class SPDGUI extends JFrame {
                     }
                 } 
             } 
-    private static ListaDoble getRandomWords(String filePath, int numWordsToSelect) throws IOException {
-       
-       NodoDoble<String> cabeza = readWordsFromFile(filePath);
+//    private static ListaDoble getRandomWords(String filePath, int numWordsToSelect) throws IOException {
+//       
+//       NodoDoble<String> cabeza = readWordsFromFile(filePath);
+//
+//    if (cabeza == null || numWordsToSelect > getWordCount(cabeza)) {
+//        throw new IllegalArgumentException("Error");
+//    }
+//
+//    Random random = new Random();
+//    ListaDoble<String> selectedWords = new ListaDoble<>();
+//
+//    // Generate random words without duplicates
+//    for (int i = 0; i < numWordsToSelect; i++) {
+//        int randomIndex = random.nextInt(getWordCount(cabeza)); // Adjust for 0-based indexing
+//
+//        // Select a random node
+//        NodoDoble<String> current = cabeza;
+//        for (int j = 0; j < randomIndex; j++) {
+//            current = current.getpNext();
+//        }
+//
+//        // Extract the word from the node
+//        String word = current.getData();
+//
+//        if (!isExcludedWord(word, "dic") && !isWordInSelectedList(word, selectedWords.getpFirst())) {
+//            selectedWords.AgregarFinal(word); // Add word to the end of the selected words list
+//
+//            // Remove the node to avoid duplicates
+//            if (i < numWordsToSelect - 1) {
+//                removeNode(current, cabeza);
+//            }
+//        }
+//    }
+//
+//    return selectedWords;
+//
+//    }
+//
+//private static NodoDoble<String> readWordsFromFile(String filePath) {
+//    NodoDoble<String> head = null;
+//    NodoDoble<String> tail = null;
+//
+//    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            line = line.trim();
+//            if (!line.isEmpty()) {
+//                NodoDoble<String> newNode = new NodoDoble<>(line);
+//                if (head == null) {
+//                    head = newNode;
+//                    tail = newNode;
+//                } else {
+//                    tail.setpNext(newNode);
+//                    newNode.setpLast(tail);
+//                    tail = newNode;
+//                }
+//            }
+//        }
+//    }   catch (IOException ex) {
+//            Logger.getLogger(SPDGUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//    return head;
+//}
+//  
+//
+//    
+//
+//  private static int getWordCount(NodoDoble<String> head) {
+//    int count = 0;
+//    NodoDoble<String> current = head;
+//    while (current != null) {
+//        count++;
+//        current = current.getpNext();
+//    }
+//    return count;
+//}
+//    
+//    private static boolean isExcludedWord(String word, String excludedWord) {
+//    return word.equalsIgnoreCase(excludedWord);
+//}
+//
+//     private static boolean isWordInSelectedList(String word, NodoDoble<String> selectedHead) {
+//        
+//    NodoDoble<String> currentSelectedNode = selectedHead;
+//    while (currentSelectedNode != null) {
+//        if (currentSelectedNode.getData().equals(word)) {
+//            return true;
+//        }
+//        currentSelectedNode = currentSelectedNode.getpNext();
+//    }
+//    return false;
+//    }
+//         private static void removeNode(NodoDoble<String> nodo, NodoDoble<String> cabeza) {
+//        NodoDoble<String> previousNode = nodo.getpPrev();
+//        NodoDoble<String> nextNode = nodo.getpNext();
+//
+//        if (previousNode != null) {
+//            previousNode.setpNext(nextNode);
+//        } else {
+//            cabeza = nextNode;
+//        }
+//
+//        if (nextNode != null) {
+//            nextNode.setpLast(previousNode);
+//        }
+//         }
+//
 
-    if (cabeza == null || numWordsToSelect > getWordCount(cabeza)) {
-        throw new IllegalArgumentException("Error");
-    }
-
-    Random random = new Random();
-    ListaDoble<String> selectedWords = new ListaDoble<>();
-
-    // Generate random words without duplicates
-    for (int i = 0; i < numWordsToSelect; i++) {
-        int randomIndex = random.nextInt(getWordCount(cabeza)); // Adjust for 0-based indexing
-
-        // Select a random node
-        NodoDoble<String> current = cabeza;
-        for (int j = 0; j < randomIndex; j++) {
-            current = current.getpNext();
-        }
-
-        // Extract the word from the node
-        String word = current.getData();
-
-        if (!isExcludedWord(word, "dic") && !isWordInSelectedList(word, selectedWords.getpFirst())) {
-            selectedWords.AgregarFinal(word); // Add word to the end of the selected words list
-
-            // Remove the node to avoid duplicates
-            if (i < numWordsToSelect - 1) {
-                removeNode(current, cabeza);
-            }
-        }
-    }
-
-    return selectedWords;
-
-    }
-
-private static NodoDoble<String> readWordsFromFile(String filePath) throws IOException {
-    NodoDoble<String> head = null;
-    NodoDoble<String> tail = null;
-
-    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            line = line.trim(); 
-            if (!line.isEmpty()) { 
-                NodoDoble<String> newNode = new NodoDoble<>(line);
-                if (head == null) {
-                    head = newNode;
-                    tail = newNode;
-                } else {
-                    tail.setpNext(newNode);
-                    newNode.setpLast(tail);
-                    tail = newNode;
-                }
-            }
-        }
-    }
-    
-    return head;
+/**
+* Método principal para ejecutar la aplicación.
+* @param args Los argumentos de la línea de comandos.
+*/
+public static void main(String[] args) {
+      SwingUtilities.invokeLater(SPDGUI::new);
+      }
 }
-    
-
-  private static int getWordCount(NodoDoble<String> head) {
-    int count = 0;
-    NodoDoble<String> current = head;
-    while (current != null) {
-        count++;
-        current = current.getpNext();
-    }
-    return count;
-}
-    
-    private static boolean isExcludedWord(String word, String excludedWord) {
-    return word.equalsIgnoreCase(excludedWord);
-}
-
-     private static boolean isWordInSelectedList(String word, NodoDoble<String> selectedHead) {
-        
-    NodoDoble<String> currentSelectedNode = selectedHead;
-    while (currentSelectedNode != null) {
-        if (currentSelectedNode.getData().equals(word)) {
-            return true;
-        }
-        currentSelectedNode = currentSelectedNode.getpNext();
-    }
-    return false;
-    }
-         private static void removeNode(NodoDoble<String> nodo, NodoDoble<String> cabeza) {
-        NodoDoble<String> previousNode = nodo.getpPrev();
-        NodoDoble<String> nextNode = nodo.getpNext();
-
-        if (previousNode != null) {
-            previousNode.setpNext(nextNode);
-        } else {
-            cabeza = nextNode;
-        }
-
-        if (nextNode != null) {
-            nextNode.setpLast(previousNode);
-        }
-    }
-}
-
-            /**
-             * Método principal para ejecutar la aplicación.
-             * @param args Los argumentos de la línea de comandos.
-             */
-            public static void main(String[] args) {
-                SwingUtilities.invokeLater(SPDGUI::new);
-            }
-            } 
+                
