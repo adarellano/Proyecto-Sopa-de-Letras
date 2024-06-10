@@ -181,17 +181,63 @@ public class SPDGUI extends JFrame {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(selectedFile));
                 String line;
-                StringBuilder stringBuilder = new StringBuilder();
+                LinkedList<String> words = new LinkedList<>();
                 while ((line = reader.readLine()) != null) {
-                    String[] words = line.split(" ");
-                    for (String word : words) {
-                        stringBuilder.append(word).append("\n");
+                    String[] lineWords = line.split(" ");
+                    for (String word : lineWords) {
+                        words.add(word);
                     }
                 }
                 reader.close();
-    
+
+                // Selecciona hasta 4 palabras
+                while (words.size() > 4) {
+                    words.remove(words.size() - 1);
+                }
+                // Desordena las palabras
+    for (int i = 0; i < words.size(); i++) {
+        int randomIndex = (int) (System.nanoTime() % words.size());
+        String temp = words.get(i);
+        words.set(i, words.get(randomIndex));
+        words.set(randomIndex, temp);
+    }
+
+    char[][] matrix = new char[4][4];
+
+    for (int i = 0; i < words.size(); i++) {
+        String word = words.get(i);
+        char[] letters = word.toCharArray();
+
+        // Desordenar las letras
+        for (int j = 0; j < letters.length; j++) {
+            int randomIndex = (int) (System.nanoTime() % letters.length);
+            char temp = letters[j];
+            letters[j] = letters[randomIndex];
+            letters[randomIndex] = temp;
+        }
+
+        // Colocar las letras en la matriz
+        for (int j = 0; j < letters.length && j < 4; j++) {
+            matrix[i][j] = letters[j];
+        }
+    }
+
+    // Imprimir la matriz
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            System.out.print(matrix[i][j] + " ");
+        }
+        System.out.println();
+    }
+
+                // Llena el tablero con las palabras
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String word : words) {
+                    stringBuilder.append(word).append("\n");
+                }
+
                 tableroYDiccionarioArea.setText(stringBuilder.toString());
-    
+
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
